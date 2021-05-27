@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<form action="" method="POST" autocomplete="off">
+    {% csrf_token %}
+    
+    <div class="row">
+        <div class="col-md-6">
+            {{form.nombre|as_crispy_field}}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-8">
+            <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-database"></i>
+                Guardar</button>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'zona_list' %}" class="btn btn-secondary btn-block btn-lg">
+                <i class="fas fa-stream"></i> Lista
+            </a>
+        </div>
+    </div>
+    
+</form>
+{% endblock content %}
