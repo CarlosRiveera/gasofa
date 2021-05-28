@@ -4,25 +4,27 @@
 <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
-            <td>Nombre entidad</td>
-            <td>Rubro</td>
+            <td>Nombre</td>
+            <td>direccion</td>
+            <td>municipio</td>
             <td>
-                <a href="{% url 'entidad_insert' %}" class="btn btn-outline-success">
+                <a href="{% url 'gasolinera_insert' %}" class="btn btn-outline-success">
                     <i class="fas fa-plus"></i> Agregar nuevo
                 </a>
             </td>
         </tr>
     </thead>
     <tbody>
-        {% for zona in zona_list%}
+        {% for Gasolineras in gasolinera_list%}
             <tr>
-                <td>{{entidad.nombreEntidad}}</td>
-                <td>{{entidad.rubro}}</td>
+                <td>{{Gasolineras.nombre}}</td>
+                <td>{{Gasolineras.direccion}}</td>
+                <td>{{Gasolineras.municipio}}</td>
                 <td>
-                    <a href="{% url 'entidad_update' entidad.id %}" class="btn text-secondary px-0">
+                    <a href="{% url 'gasolinera_update' Gasolineras.id %}" class="btn text-secondary px-0">
                         <i class="far fa-edit fa-lg"></i>
                     </a>
-                    <form action="{% url 'entidad_delete' entidad.id %}" method="post" class="d-inline">
+                    <form action="{% url 'gasolinera_delete' Gasolineras.id %}" method="post" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn">
                             <i class="far fa-trash-alt fa-lg text-danger float-right"></i>

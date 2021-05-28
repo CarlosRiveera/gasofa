@@ -6,5 +6,8 @@ from . import views
 
 urlpatterns = [
   #listas
-	path('', views.zonas_form, name="zona_insert"),
+	path('', views.precio_form, name="precio_insert"),
+  path('list/', views.gasolinera_list, name="gasolinera_list"),
+  path('<int:id>/', views.gasolinera_form,name='gasolinera_update'),
+  path('delete/<int:id>/',views.gasolinera_delete,name='gasolinera_delete'),
 ]
