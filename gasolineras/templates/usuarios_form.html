@@ -1,4 +1,4 @@
-{% extends "baseprice.html" %}
+{% extends "baseusers.html" %}
 {% load crispy_forms_tags %}
 
 
@@ -8,19 +8,16 @@
     
     <div class="row">
         <div class="col-md-8">
-            {{form.precio|as_crispy_field}}
+            {{form.usuario|as_crispy_field}}
         </div>
         <div class="col-md-8">
-            {{form.fecha_creacion|as_crispy_field}}
+            {{form.clave|as_crispy_field}}
         </div>
     </div>
     <br>
     <div class="row">
         <div class="col-md-12">
-            {{form.tipo_precio|as_crispy_field}}   
-        </div>
-        <div class="col-md-12">
-            {{form.usuario|as_crispy_field}}   
+            {{form.tipo_usuario|as_crispy_field}}   
         </div>
     </div>
     <br>
@@ -30,7 +27,7 @@
                 Guardar</button>
         </div>
         <div class="col-md-4">
-            <a href="{% url 'precio_list' %}" class="btn btn-secondary btn-block btn-lg">
+            <a href="{% url 'usuario_list' %}" class="btn btn-secondary btn-block btn-lg">
                 <i class="fas fa-stream"></i> Lista
             </a>
         </div>

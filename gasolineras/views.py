@@ -1,6 +1,12 @@
 from django.shortcuts import render, redirect
-from .forms import gasolineraForm, precioForm
-from .models import Gasolineras, Precios
+from .forms import gasolineraForm, precioForm, usuarioForm
+from .models import Gasolineras, Precios, Usuarios
+
+
+def home(request):
+    context = {}
+    return render(request, "index.html", context)
+
 
 # this is for gasolineras.
 def gasolinera_list(request):
@@ -52,10 +58,37 @@ def precio_form(request, id=0):
             form = precioForm(request.POST,instance= Precio)
         if form.is_valid():
             form.save()
-        return redirect('/gasolineras/list')
+        return redirect('/gasolineras/precio_list')
     
 def precio_delete(request, id):
     Precio = Precios.objects.get(pk=id)
     Precio.delete()
-    return redirect('/gasolineras/list') 
+    return redirect('/gasolineras/precio_list') 
 
+# this is for usuarios.
+def usuario_list(request):
+    context = {'usuario_list': Usuarios.objects.all()}
+    return render(request, "usuarios_list.html", context)
+
+def usuario_form(request, id=0):
+    if request.method == "GET": 
+        if id == 0:
+            form = usuarioForm()
+        else:
+            Usuario = Usuarios.objects.get(pk=id)
+            form = usuarioForm(instance=Usuario)
+        return render(request, "usuarios_form.html", {'form': form})
+    else:
+        if id == 0:
+            form = usuarioForm(request.POST)
+        else:
+            Usuario = Usuarios.objects.get(pk=id)
+            form = usuarioForm(request.POST,instance= Usuario)
+        if form.is_valid():
+            form.save()
+        return redirect('/gasolineras/usuario_list')
+    
+def usuario_delete(request, id):
+    Usuario = Usuarios.objects.get(pk=id)
+    Usuario.delete()
+    return redirect('/gasolineras/usuario_list') 
