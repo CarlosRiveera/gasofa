@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import gasolineraForm, precioForm, usuarioForm
-from .models import Gasolineras, Precios, Usuarios, Zona, Tipo_Gasolina
+from .models import Gasolineras, Precios, Usuarios, Zona, Tipo_Gasolina, Departamento, Municipio
 from django.db import connection
 
 
@@ -96,6 +96,78 @@ def home(request):
 
     return render(request, "home.html", context)
 
+def gasoline_prices(request):
+    gaid = request.GET.get('gaid', None)    # Gasolinera
+    if gaid is None or gaid == '':
+        gaid = -1
+    gid = request.GET.get('gid', None)      # Gasolina
+    if gid is None or gid == '':
+        gid = -1
+    zid = request.GET.get('zid', None)      # Zona
+    if zid is None or zid == '':
+        zid = -1
+    did = request.GET.get('did', None)      # Departamento
+    if did is None or did == '':
+        did = -1
+    mid = request.GET.get('mid', None)      # Municipio
+    if mid is None or mid == '':
+        mid = -1
+    dfrom = request.GET.get('dfrom', None)  # Fecha: Desde
+    if dfrom is None or dfrom == '':
+        dfrom = -1
+    dto = request.GET.get('dto', None)      # Fecha: Hasta
+    if dto is None or dto == '':
+        dto = -1
+
+    finalQuery = "SELECT pg.id AS id, g.nombre AS gasolinera, p.precio AS precio, tp.nombre AS tipo_precio, tg.nombre as gasolina, p.fecha_creacion as fecha,"
+    finalQuery += " d.nombre as departamento, m.nombre as municipio, z.nombre as zona "
+    finalQuery += "FROM gasolineras_precios_gasolineras AS pg, gasolineras_gasolineras as g, gasolineras_precios AS p, gasolineras_tipo_precio AS tp, gasolineras_tipo_gasolina as tg,"
+    finalQuery += " gasolineras_zona as z, gasolineras_departamento as d, gasolineras_municipio as m "
+    finalQuery += "WHERE pg.precio_id = p.id AND p.tipo_precio_id = tp.id AND pg.gasolinera_id = g.id AND p.tipo_gasolina_id = tg.id"
+    finalQuery += " AND g.municipio_id = m.id AND m.departamento_id = d.id AND d.zona_id = z.id"
+
+    if gaid != -1 and gaid != "-1":
+        finalQuery += " AND g.id = " + gaid
+    if gid != -1 and gid != "-1":
+        finalQuery += " AND tg.id = " + gid
+    if zid != -1 and zid != "-1":
+        finalQuery += " AND z.id = " + zid
+    if did != -1 and did != "-1":
+        finalQuery += " AND d.id = " + did
+    if mid != -1 and mid != "-1":
+        finalQuery += " AND m.id = " + mid
+    if dfrom != -1:
+        finalQuery += " AND p.fecha_creacion >= '" + dfrom + "'"
+    if dto != -1:
+        finalQuery += " AND p.fecha_creacion <= '" + dto + "'"
+    finalQuery += " ORDER BY p.fecha_creacion ASC;"
+
+    with connection.cursor() as cursor:
+        cursor.execute(finalQuery)
+        queryResponse = cursor.fetchall()
+
+    context = {
+        'gasolineras': Gasolineras.objects.all().order_by('id'),
+        'gasolinas': Tipo_Gasolina.objects.all().order_by('id'),
+        'zonas': Zona.objects.all().order_by('id'),
+        'departamentos': Departamento.objects.all().order_by('nombre'),
+        'municipios': Municipio.objects.all().order_by('nombre'),
+        'queryResponse': queryResponse, 
+        'gaid': int(gaid),
+        'gid': int(gid),
+        'zid': int(zid),
+        'mid': int(mid),
+        'did': int(did),
+        'finalQuery': finalQuery
+    }
+
+    if dfrom != -1:
+        context['dfrom'] = dfrom
+    
+    if dto != -1:
+        context['dto'] = dto
+
+    return render(request, "gasoline_prices.html", context)
 
 # this is for gasolineras.
 def gasolinera_list(request):

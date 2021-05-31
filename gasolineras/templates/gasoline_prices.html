@@ -19,7 +19,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item ">
-                <a class="nav-link" href="/gasolineras/precios_gasolineras">Precios de Gasolineras</a>
+                <a class="nav-link" href="/gasolineras/precios_gasolineras">Precios de Gasolineras<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item ">
                 <a class="nav-link" href="/gasolineras/gasolinera">Gasolineras</a>
@@ -37,10 +37,21 @@
 <body>
     <div class="container">
         <br>
-        <h1>Precios de referencia</h1>        
+        <h1>Precios de gasolineras</h1>        
         <br>
         <h4>Filtros</h4>
         <form action="" method="GET" id="filters">
+            <div>
+                <label for="gaid">Gasolinera: </label>
+                <select name="gaid" id="gaid" form="filters">
+                    <option value="-1" >Seleccione una gasolinera</option>
+                    {% for gasolinera in gasolineras %}
+                    <option value="{{gasolinera.id}}" {% if gaid == gasolinera.id %} selected{% endif %}>
+                        {{gasolinera.nombre}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
             <div>
                 <label for="gid">Tipo de gasolina: </label>
                 <select name="gid" id="gid" form="filters">
@@ -48,6 +59,28 @@
                     {% for gasolina in gasolinas %}
                     <option value="{{gasolina.id}}" {% if gid == gasolina.id %} selected{% endif %}>
                         {{gasolina.nombre}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label for="mid">Municipio: </label>
+                <select name="mid" id="mid" form="filters">
+                    <option value="-1" >Seleccione un municipio</option>
+                    {% for municipio in municipios %}
+                    <option value="{{municipio.id}}" {% if mid == municipio.id %} selected{% endif %}>
+                        {{municipio.nombre}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label for="did">Departamento: </label>
+                <select name="did" id="did" form="filters">
+                    <option value="-1" >Seleccione un departamento</option>
+                    {% for departamento in departamentos %}
+                    <option value="{{departamento.id}}" {% if did == departamento.id %} selected{% endif %}>
+                        {{departamento.nombre}}
                     </option>
                     {% endfor %}
                 </select>
@@ -78,7 +111,7 @@
         </form>
 
         <br>
-        <form action="/gasolineras" id="all">
+        <form action="/gasolineras/precios_gasolineras" id="all">
             <button>Limpiar filtros</button>
         </form>
         <br>
@@ -88,68 +121,29 @@
             <thead class="border-bottom font-weight-bold">
                 <tr>
                     <td>Precio</td>
-                    <td>Tipo de precio</td>
-                    <td>Zona</td>
+                    <td>Gasolinera</td>
                     <td>Tipo de gasolina</td>
                     <td>Fecha de precio</td>
+                    <td>Departamento</td>
+                    <td>Municipio</td>
+                    <td>Zona</td>
                 </tr>
             </thead>
             <tbody>
                 {% for item in queryResponse %}
                 <tr>
-                    <td>{{item.1}}</td>
                     <td>{{item.2}}</td>
-                    <td>{{item.3}}</td>
+                    <td>{{item.1}}</td>
                     <td>{{item.4}}</td>
                     <td>{{item.5}}</td>
+                    <td>{{item.6}}</td>
+                    <td>{{item.7}}</td>
+                    <td>{{item.8}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
         <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <h1>Graficos</h1>
-        <p class="lead font-bold">Precios de referencia - Zona central</p>
-        <div class="row">
-            <div class="col-md-4">
-                <canvas id="centralEspecial"></canvas>
-            </div>
-            <div class="col-md-4">
-                <canvas id="centralRegular"></canvas>
-            </div>
-            <div class="col-md-4">
-                <canvas id="centralDiesel"></canvas>
-            </div>
-        </div>
-        <br>
-        <p class="lead font-bold">Precios de referencia - Zona oriental</p>
-        <div class="row">
-            <div class="col-md-4">
-                <canvas id="orientalEspecial"></canvas>
-            </div>
-            <div class="col-md-4">
-                <canvas id="orientalRegular"></canvas>
-            </div>
-            <div class="col-md-4">
-                <canvas id="orientalDiesel"></canvas>
-            </div>
-        </div>
-        <br>
-        <p class="lead font-bold">Precios de referencia - Zona occidental</p>
-        <div class="row">
-            <div class="col-md-4">
-                <canvas id="occidentalEspecial"></canvas>
-            </div>
-            <div class="col-md-4">
-                <canvas id="occidentalRegular"></canvas>
-            </div>
-            <div class="col-md-4">
-                <canvas id="occidentalDiesel"></canvas>
-            </div>
-        </div>
         <br>
         <br>
     </div>

@@ -6,6 +6,7 @@ from . import views
 
 urlpatterns = [
   path('', views.home, name = "Home"),
+  path('precios_gasolineras', views.gasoline_prices, name = "gasoline_prices"),
   #urls for gas
   path('gasolinera', views.gasolinera_form, name="gasolinera_insert"),
   path('list/', views.gasolinera_list, name="gasolinera_list"),
