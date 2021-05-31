@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/gasolineras/">Gasofa</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item ">
+                <a class="nav-link" href="/gasolineras/gasolinera">Gasolineras</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gasolineras/precios">Precios</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gasolineras/usuarios">Usuarios</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<body>
+    <div class="container">
+        <h2>Precios de referencia</h2>
+        <br>
+        <h4>Filtros</h4>
+        <form action="" method="GET" id="filters">
+            <div>
+                <label for="gid">Tipo de gasolina: </label>
+                <select name="gid" id="gid" form="filters">
+                    <option value="-1" >Seleccione un tipo de gasolina</option>
+                    {% for gasolina in gasolinas %}
+                    <option value="{{gasolina.id}}" {% if gid == gasolina.id %} selected{% endif %}>
+                        {{gasolina.nombre}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label for="zid">Zona: </label>
+                <select name="zid" id="zid" form="filters">
+                    <option value="-1" >Seleccione una zona</option>
+                    {% for zona in zonas %}
+                    <option value="{{zona.id}}" {% if zid == zona.id %} selected{% endif %}>
+                        {{zona.nombre}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label for="dfrom">Fecha - Desde:</label>
+                <input type="date" name="dfrom" id="dfrom" value="{{dfrom}}">
+            </div>
+            <div>
+                <label for="dto">Fecha - Hasta:</label>
+                <input type="date" name="dto" id="dto" value="{{dto}}">
+            </div>
+            <br>
+            <div>
+                <button>Cargar tabla con filtros</button>
+            </div>
+        </form>
+
+        <br>
+        <form action="/gasolineras" id="all">
+            <button>Limpiar filtros</button>
+        </form>
+        <br>
+        <br>
+
+        <table class="table table-borderless">
+            <thead class="border-bottom font-weight-bold">
+                <tr>
+                    <td>Precio</td>
+                    <td>Tipo de precio</td>
+                    <td>Zona</td>
+                    <td>Tipo de gasolina</td>
+                    <td>Fecha de precio</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in queryResponse %}
+                <tr>
+                    <td>{{item.1}}</td>
+                    <td>{{item.2}}</td>
+                    <td>{{item.3}}</td>
+                    <td>{{item.4}}</td>
+                    <td>{{item.5}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1>Graficos</h1>
+        <p class="lead font-bold">Precios de referencia - Zona central</p>
+        <div class="row">
+            <div class="col-md-4">
+                <canvas id="centralEspecial"></canvas>
+            </div>
+            <div class="col-md-4">
+                <canvas id="centralRegular"></canvas>
+            </div>
+            <div class="col-md-4">
+                <canvas id="centralDiesel"></canvas>
+            </div>
+        </div>
+        <br>
+        <p class="lead font-bold">Precios de referencia - Zona oriental</p>
+        <div class="row">
+            <div class="col-md-4">
+                <canvas id="orientalEspecial"></canvas>
+            </div>
+            <div class="col-md-4">
+                <canvas id="orientalRegular"></canvas>
+            </div>
+            <div class="col-md-4">
+                <canvas id="orientalDiesel"></canvas>
+            </div>
+        </div>
+        <br>
+        <p class="lead font-bold">Precios de referencia - Zona occidental</p>
+        <div class="row">
+            <div class="col-md-4">
+                <canvas id="occidentalEspecial"></canvas>
+            </div>
+            <div class="col-md-4">
+                <canvas id="occidentalRegular"></canvas>
+            </div>
+            <div class="col-md-4">
+                <canvas id="occidentalDiesel"></canvas>
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var centralEspecial = new Chart(
+            document.getElementById('centralEspecial'),
+            {
+                type: 'line',
+                data: {
+                    labels: [
+                        {% for item in centralEspecial %}
+                        '{{item.5}}',
+                        {% endfor %}
+                    ],
+        datasets: [{
+            label: 'Gasolina Especial',
+            backgroundColor: '#017763',
+            borderColor: '#017763',
+            data: [
+                {% for item in centralEspecial %}
+                            {{ item.1}},
+        {% endfor %}
+        ],
+                    }]
+                },
+        options: { }
+            }
+        );
+
+        var centralRegular = new Chart(
+            document.getElementById('centralRegular'),
+            {
+                type: 'line',
+                data: {
+                    labels: [
+                        {% for item in centralRegular %}
+                        '{{item.5}}',
+                        {% endfor %}
+                    ],
+        datasets: [{
+            label: 'Gasolina Regular',
+            backgroundColor: '#fd7a2e',
+            borderColor: '#fd7a2e',
+            data: [
+                {% for item in centralRegular %}
+                            {{ item.1}},
+        {% endfor %}
+        ],
+                    }]
+                },
+        options: { }
+            }
+        );
+
+        var centralDiesel = new Chart(
+            document.getElementById('centralDiesel'),
+            {
+                type: 'line',
+                data: {
+                    labels: [
+                        {% for item in centralDiesel %}
+                        '{{item.5}}',
+                        {% endfor %}
+                    ],
+        datasets: [{
+            label: 'Diesel',
+            backgroundColor: '#d84b49',
+            borderColor: '#d84b49',
+            data: [
+                {% for item in centralDiesel %}
+                            {{ item.1}},
+        {% endfor %}
+        ],
+                    }]
+                },
+        options: { }
+            }
+        );
+
+        var orientalEspecial = new Chart(
+            document.getElementById('orientalEspecial'),
+            {
+                type: 'line',
+                data: {
+                    labels: [
+                        {% for item in orientalEspecial %}
+                        '{{item.5}}',
+                        {% endfor %}
+                    ],
+        datasets: [{
+            label: 'Gasolina Especial',
+            backgroundColor: '#017763',
+            borderColor: '#017763',
+            data: [
+                {% for item in orientalEspecial %}
+                            {{ item.1}},
+        {% endfor %}
+        ],
+                    }]
+                },
+        options: { }
+            }
+        );
+
+        var orientalRegular = new Chart(
+            document.getElementById('orientalRegular'),
+            {
+                type: 'line',
+                data: {
+                    labels: [
+                        {% for item in orientalRegular %}
+                        '{{item.5}}',
+                        {% endfor %}
+                    ],
+        datasets: [{
+            label: 'Gasolina Regular',
+            backgroundColor: '#fd7a2e',
+            borderColor: '#fd7a2e',
+            data: [
+                {% for item in orientalRegular %}
+                            {{ item.1}},
+        {% endfor %}
+        ],
+                    }]
+                },
+        options: { }
+            }
+        );
+
+        var orientalDiesel = new Chart(
+            document.getElementById('orientalDiesel'),
+            {
+                type: 'line',
+                data: {
+                    labels: [
+                        {% for item in orientalDiesel %}
+                        '{{item.5}}',
+                        {% endfor %}
+                    ],
+        datasets: [{
+            label: 'Diesel',
+            backgroundColor: '#d84b49',
+            borderColor: '#d84b49',
+            data: [
+                {% for item in orientalDiesel %}
+                            {{ item.1}},
+        {% endfor %}
+        ],
+                    }]
+                },
+        options: { }
+            }
+        );
+
+        var occidentalEspecial = new Chart(
+            document.getElementById('occidentalEspecial'),
+            {
+                type: 'line',
+                data: {
+                    labels: [
+                        {% for item in occidentalEspecial %}
+                        '{{item.5}}',
+                        {% endfor %}
+                    ],
+        datasets: [{
+            label: 'Gasolina Especial',
+            backgroundColor: '#017763',
+            borderColor: '#017763',
+            data: [
+                {% for item in occidentalEspecial %}
+                            {{ item.1}},
+        {% endfor %}
+        ],
+                    }]
+                },
+        options: { }
+            }
+        );
+
+        var occidentalRegular = new Chart(
+            document.getElementById('occidentalRegular'),
+            {
+                type: 'line',
+                data: {
+                    labels: [
+                        {% for item in occidentalRegular %}
+                        '{{item.5}}',
+                        {% endfor %}
+                    ],
+        datasets: [{
+            label: 'Gasolina Regular',
+            backgroundColor: '#fd7a2e',
+            borderColor: '#fd7a2e',
+            data: [
+                {% for item in occidentalRegular %}
+                            {{ item.1}},
+        {% endfor %}
+        ],
+                    }]
+                },
+        options: { }
+            }
+        );
+
+        var occidentalDiesel = new Chart(
+            document.getElementById('occidentalDiesel'),
+            {
+                type: 'line',
+                data: {
+                    labels: [
+                        {% for item in occidentalDiesel %}
+                        '{{item.5}}',
+                        {% endfor %}
+                    ],
+        datasets: [{
+            label: 'Diesel',
+            backgroundColor: '#d84b49',
+            borderColor: '#d84b49',
+            data: [
+                {% for item in occidentalDiesel %}
+                            {{ item.1}},
+        {% endfor %}
+        ],
+                    }]
+                },
+        options: { }
+            }
+        );
+    </script>
+
+</body>
+
+</html>
