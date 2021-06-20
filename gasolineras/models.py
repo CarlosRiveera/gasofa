@@ -81,7 +81,7 @@ class Tipo_Gasolina(models.Model):
 class Precios(models.Model):
     id = models.AutoField(primary_key=True)
     precio = models.DecimalField(max_digits=6, decimal_places=2)
-    fecha_creacion = models.DateField(auto_now_add=False)
+    fecha_creacion = models.DateField(auto_now_add=True)
     tipo_gasolina = models.ForeignKey(Tipo_Gasolina, on_delete=models.CASCADE)
     tipo_precio = models.ForeignKey(Tipo_Precio, on_delete=models.CASCADE)
     usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE)

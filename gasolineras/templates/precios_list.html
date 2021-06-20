@@ -7,6 +7,7 @@
             <td>Precio</td>
             <td>Fecha Creacion</td>
             <td>Tipo precio</td>
+            <td>Tipo gasolina</td>  
             <td>Usuario</td>    
             
             <td>
@@ -22,6 +23,7 @@
                 <td>{{Precios.precio}}</td>
                 <td>{{Precios.fecha_creacion}}</td>
                 <td>{{Precios.tipo_precio}}</td>
+                <td>{{Precios.tipo_gasolina}}</td>
                 <td>{{Precios.usuario}}</td>
                 <td>
                     <a href="{% url 'precio_update' Precios.id %}" class="btn text-secondary px-0">
