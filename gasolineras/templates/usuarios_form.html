@@ -7,19 +7,30 @@
     {% csrf_token %}
     
     <div class="row">
-        <div class="col-md-8">
-            {{form.usuario|as_crispy_field}}
+        <div class="col-md-6">
+            {{form.username|as_crispy_field}}
         </div>
-        <div class="col-md-8">
-            {{form.clave|as_crispy_field}}
+        <div class="col-md-6">
+            {{form.email|as_crispy_field}}
         </div>
     </div>
     <br>
     <div class="row">
         <div class="col-md-12">
-            {{form.tipo_usuario|as_crispy_field}}   
+            {{form.password1|as_crispy_field}}   
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{form.password2|as_crispy_field}}   
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{form2.tipo_usuario|as_crispy_field}}   
+        </div>
+    </div>
+    {{form.errors}}
     <br>
     <div class="row">
         <div class="col-md-8">

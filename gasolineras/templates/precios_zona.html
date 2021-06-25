@@ -7,24 +7,14 @@
     {% csrf_token %}
     
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-8">
             {{form.precio|as_crispy_field}}
         </div>
-        <div class="col-md-8">
-            {{form.tipo_gasolina|as_crispy_field}}   
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            {{form.tipo_precio|as_crispy_field}}   
-        </div>
-        <div class="col-md-6">
-            {{form.usuario|as_crispy_field}}   
-        </div>
         <div class="col-md-12">
-            {{form2.zona|as_crispy_field}}   
+            {{form.zona|as_crispy_field}}   
         </div>
     </div>
+    <br>
     <br>
     <div class="row">
         <div class="col-md-8">
@@ -33,7 +23,7 @@
             </button>
         </div>
         <div class="col-md-4">
-            <a href="{% url 'precio_list' %}" class="btn btn-secondary btn-block btn-lg">
+            <a  class="btn btn-secondary btn-block btn-lg">
                 <i class="fas fa-stream"></i> Lista
             </a>
         </div>
