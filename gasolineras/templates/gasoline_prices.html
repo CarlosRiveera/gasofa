@@ -18,17 +18,27 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item ">
+            <li class="nav-item active">
                 <a class="nav-link" href="/gasolineras/precios_gasolineras">Precios de Gasolineras<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item ">
                 <a class="nav-link" href="/gasolineras/gasolinera">Gasolineras</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/gasolineras/precios">Precios</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Gestion precios
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="nav-link" href="/gasolineras/precios">Precios de Referencia</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="nav-link" href="/gasolineras/preciosG">Precios de gasolineras</a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/gasolineras/usuarios">Usuarios</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gasolineras/logout">Log out</a>
             </li>
         </ul>
     </div>

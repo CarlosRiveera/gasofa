@@ -1,4 +1,4 @@
-{% extends "baseprice.html"%}
+{% extends "basepriceG.html"%}
 
 {% block content %}
 <table class="table table-borderless">
@@ -26,7 +26,7 @@
                 <td>{{Precios.tipo_precio}}</td>
                 <td>{{Precios.tipo_gasolina}}</td>
                 <td>{{Precios.usuario}}</td>
-                <td>{{Zona.nombre}}</td>
+                <td>{{Gasolineras.nombre}}</td>
                 <td>
                     <a href="{% url 'precio_update' Precios.id %}" class="btn text-secondary px-0">
                         <i class="far fa-edit fa-lg"></i>

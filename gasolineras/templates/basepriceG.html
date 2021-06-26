@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Detalle de ayuda</title>
+        <title>Precios referencia</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
@@ -19,10 +19,10 @@
             <li class="nav-item ">
                 <a class="nav-link" href="/gasolineras/precios_gasolineras">Precios de Gasolineras</a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item">
             <a class="nav-link" href="/gasolineras/gasolinera">Gasolineras</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Gestion precios
                 </a>
@@ -32,8 +32,8 @@
                     <a class="nav-link" href="/gasolineras/preciosG">Precios de gasolineras</a>
                 </div>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/gasolineras/usuarios">Usuarios<span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+                <a class="nav-link" href="/gasolineras/usuarios">Usuarios</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/gasolineras/logout">Log out</a>
@@ -45,8 +45,8 @@
         <div class="container">
             <div class="col-md-10 offset-md-1 mt-5">
                 <div class="jumbotron">
-                    <h1 class="display-4">Registro de usuarios</h1>
-                    <p class="lead font-italic">Formulario utilizado para el registro de nuevos usuarios</p>
+                    <h1 class="display-4">Registro de precios por gasolineras</h1>
+                    <p class="lead font-italic">Formulario utilizado para el registro de los precios por gasolinera </p>
                     <hr class="my-4">
                     {% block content %}
                     {% endblock content %}

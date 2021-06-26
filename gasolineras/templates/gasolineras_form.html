@@ -7,17 +7,16 @@
     {% csrf_token %}
     
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-6">
             {{form.nombre|as_crispy_field}}
         </div>
-        <div class="col-md-8">
-            {{form.direccion|as_crispy_field}}
+        <div class="col-md-6">
+            {{form.municipio|as_crispy_field}}   
         </div>
     </div>
-    <br>
     <div class="row">
         <div class="col-md-12">
-            {{form.municipio|as_crispy_field}}   
+            {{form.direccion|as_crispy_field}}
         </div>
     </div>
     <br>

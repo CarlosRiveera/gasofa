@@ -69,6 +69,7 @@ class Usuarios(models.Model):
         return self.usuario
     class Meta:
         ordering = ['usuario']
+    USERNAME_FIELD = 'usuario'
 
 class Tipo_Gasolina(models.Model):
     id = models.AutoField(primary_key=True)
